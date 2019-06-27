@@ -1,18 +1,42 @@
-import pytest
+from time import sleep
+from .pages.locators import ProductPageLocators
 from .pages.product_page import ProductPage
 
 
-@pytest.mark.parametrize('link', ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
-                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer1",
-                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer2",
-                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer3",
-                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer4",
-                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer5",
-                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer6",
-                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer7",
-                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer8",
-                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer9"])
-def test_guest_can_add_product_to_cart(browser, link):
+# def test_guest_can_add_product_to_cart(browser):
+#     page = ProductPage(browser, link)
+#     page.open()
+#     page.add_to_basket()
+#     page.should_be_success_msg()
+#     name = page.get_book_name()
+#     name_from_msg = page.get_book_name_from_msg()
+#     page.should_be_same_names(name, name_from_msg)
+#     price = page.get_price()
+#     price_from_msg = page.get_price_from_msg()
+#     page.should_be_same_price(price, price_from_msg)
+
+
+def test_guest_cant_see_success_message_after_adding_product_to_cart(browser):
+    link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
     page = ProductPage(browser, link)
     page.open()
     page.add_to_basket()
+    assert page.is_not_element_present(
+        *ProductPageLocators.SUCCESS_MSG), 'Element present, but shouldnt.'
+
+
+def test_guest_cant_see_success_message(browser):
+    link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
+    page = ProductPage(browser, link)
+    page.open()
+    assert page.is_not_element_present(
+        *ProductPageLocators.SUCCESS_MSG), 'Element present, but shouldnt.'
+
+
+def test_message_dissapeared_after_adding_product_to_cart(browser):
+    link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
+    page = ProductPage(browser, link)
+    page.open()
+    page.add_to_basket()
+    assert page.is_disappeared(
+        *ProductPageLocators.SUCCESS_MSG), 'Element present, but shouldnt.'
