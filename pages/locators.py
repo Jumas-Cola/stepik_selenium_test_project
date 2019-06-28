@@ -17,3 +17,8 @@ class ProductPageLocators:
     PRICE = (By.CSS_SELECTOR, '#content_inner .product_main > p.price_color')
     PRICE_ON_MSG = (By.CSS_SELECTOR, '#messages > .alert-info.fade.in p:nth-child(1) > strong')
     SUCCESS_MSG = (By.CSS_SELECTOR, '#messages > div:nth-child(1)')
+
+
+class BasePageLocators(object):
+    LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
+    LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
